@@ -9,11 +9,11 @@
 
   initWeb3: function() {
     if (typeof web3 !== 'undefined') {
-      // Ako je web3 instanca postavljena od strane Meta Maska
+      //Web3 instanca postavljena od strane Meta Maska
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
     } else {
-      // Postavi zadanu vrijednost ugovora ako nije postavljena web3 instanca
+      //Zadana instanca ukoliko web3 instanca nije pruzena
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
       web3 = new Web3(App.web3Provider);
     }
@@ -22,9 +22,9 @@
 
   initContract: function() {
     $.getJSON("Voting.json", function(voting) {
-      // Umetanje novog ugovora
+      // Instanciranje novog truffle ugovora 
       App.contracts.Voting = TruffleContract(voting);
-      // Konekcija provajdera s pametnim ugvorom
+      // Povezivanje providera za interakciju sa ugovorom
       App.contracts.Voting.setProvider(App.web3Provider);
 
       App.listenForEvents();
@@ -33,7 +33,7 @@
     });
   },
 
-  // Funkcija glasanja s pametnog ugovora
+  // azuriranje klijetske strane aplikacije za "voted" event i refresh stranice
   listenForEvents: function() {
     App.contracts.Voting.deployed().then(function(instance) {
       instance.votedEvent({}, {
@@ -41,7 +41,7 @@
         toBlock: 'latest'
       }).watch(function(error, event) {
         console.log("event triggered", event)
-        // Ponovno ucitavanje glasova
+        // Ponovno ucitavanje kad je zaprimljen novi glas
         App.render();
       });
     });
@@ -56,7 +56,7 @@
     content.hide();
     content.show();
 
-    // Ucitavanje adrese racuna
+    // Ucitavanje podataka racuna
     web3.eth.getCoinbase(function(err, account) {
       if (err === null) {
         App.account = account;
@@ -64,7 +64,7 @@
       }
     });
 
-    // Ucitavanje podataka
+    // Ucitavanje podataka ugovora
     App.contracts.Voting.deployed().then(function(instance) {
       votingInstance = instance;
       return votingInstance.noPlayers();
@@ -84,7 +84,7 @@
           var club = player[4];
           var position = player[5];
 
-          // Ispis podataka
+          // Generiranje podataka igraca
           var playerTemplate = "<tr><th>" + id + "</th><td>"+ position + "</td><td>" + name + "</td><td>" + nationalTeam +  "</th><td>" + club + "</th><td>"  + voteCount + "</td></tr>"
           playerResults.append(playerTemplate);
 
@@ -94,7 +94,7 @@
       }
       return votingInstance.voters(App.account);
    }).then(function(hasVoted) {
-     // Provjera da nije vec izvrseno glasanje s određene adrese
+     //ako je glasao, sakrij formu
      if(hasVoted) {
        $('form').hide();
      }
@@ -110,7 +110,7 @@
     App.contracts.Voting.deployed().then(function(instance) {
       return instance.vote(playerId, { from: App.account });
     }).then(function(result) {
-      // Wait for votes to update
+      // sacekaj da se glasovi azuriraju
       $("#content").hide();
       $("#loader").show();
     }).catch(function(err) {
