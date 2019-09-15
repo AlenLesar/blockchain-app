@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta chasret="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UEFA</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.bg {
+  background-image: url("images/wp.jpg");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.b {
+    background-color: #DBDBDB;
+    width: 50%;
+     margin: auto;
+     border: 3px solid black;
+     padding: 10px;
+     opacity: 0.92;
+
+
+}
+</style> 
+
+  <body>
+    <div class="bg">
+      <div class="b">
+    <div class="container" style="width: auto;">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="text-center">The Best UEFA Football Awards</h1>
+          <hr/>
+          <br/>
+          <div id="loader">
+            <p class="text-center">Učitavanje...</p>
+          </div>
+          <div id="content" style="display: none;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Pozicija</th>
+                  <th scope="col">Ime i prezime</th>
+                  <th scope="col">Reprezentacija</th>
+                  <th scope="col">Klub</th>
+                  <th scope="col">Glasovi</th>
+                </tr>
+            
+              <tbody id="playerResults">
+              </tbody>
+            </table>
+            <hr/>
+            <form onSubmit="App.castVote(); return false;">
+              <div class="form-group">
+                <label for="candidatesSelect">Odabir igrača </label>
+                <select class="form-control" id="playersSelect" style="width: auto;" > 
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Glasaj</button>
+              <hr />
+            </form>
+            <p id="accountAddress" class="text-center"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    </div>
+     </div>
+  </body>
+</html>
